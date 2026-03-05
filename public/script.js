@@ -5,9 +5,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const lastUpdatedTime = document.getElementById('last-updated-time');
     const fundCount = document.getElementById('fund-count');
 
-    const API_URL = 'http://localhost:8000/chat';
-    const LAST_UPDATED_URL = 'http://localhost:8000/last-updated';
-    const SUGGESTIONS_URL = 'http://localhost:8000/suggestions';
+    const API_URL = '/api/chat';
+    const LAST_UPDATED_URL = '/api/last-updated';
+    const SUGGESTIONS_URL = '/api/suggestions';
 
     // Fetch and display last updated time
     async function fetchLastUpdated() {
