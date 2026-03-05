@@ -1,0 +1,9 @@
+streamlit
+groq
+openai
+fastapi
+uvicorn
+chromadb
+playwright
+pydantic
+python-dotenv
