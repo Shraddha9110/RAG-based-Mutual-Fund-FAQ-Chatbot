@@ -1,0 +1,38 @@
+[
+  {
+    "scheme_name": "SBI Large Cap Fund (Direct Plan - Growth)",
+    "url": "https://www.indmoney.com/mutual-funds/sbi-large-cap-fund-direct-growth-3046",
+    "expense_ratio": "0.8%",
+    "exit_load": "0.2%",
+    "min_sip": "₹500",
+    "min_lumpsum": "₹5,000",
+    "lock_in": "No Lock-in",
+    "risk": "Very High Risk",
+    "benchmark": "BSE 100 India TR INR",
+    "aum": "₹54,821 Cr"
+  },
+  {
+    "scheme_name": "SBI Flexicap Fund (Direct Plan - Growth)",
+    "url": "https://www.indmoney.com/mutual-funds/sbi-flexicap-fund-direct-growth-3249",
+    "expense_ratio": "0.83%",
+    "exit_load": "0.1%",
+    "min_sip": "₹500",
+    "min_lumpsum": "₹1,000",
+    "lock_in": "No Lock-in",
+    "risk": "Very High Risk",
+    "benchmark": "BSE 500 India TR INR",
+    "aum": "₹23,148 Cr"
+  },
+  {
+    "scheme_name": "SBI ELSS Tax Saver Fund (Direct Plan - Growth)",
+    "url": "https://www.indmoney.com/mutual-funds/sbi-elss-tax-saver-fund-direct-growth-2754",
+    "expense_ratio": "0.89%",
+    "exit_load": "0%",
+    "min_sip": "₹500",
+    "min_lumpsum": "₹500",
+    "lock_in": "3 Years",
+    "risk": "Very High Risk",
+    "benchmark": "BSE 500 India TR INR",
+    "aum": "₹31,862 Cr"
+  }
+]

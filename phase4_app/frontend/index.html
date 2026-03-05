@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SBI Mutual Fund FAQ Assistant</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #0f172a;
+            --glass-bg: rgba(30, 41, 59, 0.7);
+            --primary-accent: #38bdf8;
+            --text-main: #f8fafc;
+            --text-dim: #94a3b8;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        .chat-container {
+            width: 100%;
+            max-width: 600px;
+            height: 80vh;
+            background: var(--glass-bg);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+        }
+
+        .header {
+            padding: 20px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 1.25rem;
+            margin: 0;
+            background: linear-gradient(90deg, #38bdf8, #818cf8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .messages {
+            flex: 1;
+            padding: 20px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .message {
+            max-width: 80%;
+            padding: 12px 16px;
+            border-radius: 15px;
+            line-height: 1.5;
+            font-size: 0.95rem;
+        }
+
+        .bot {
+            align-self: flex-start;
+            background: rgba(51, 65, 85, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .user {
+            align-self: flex-end;
+            background: var(--primary-accent);
+            color: #0f172a;
+            font-weight: 600;
+        }
+
+        .source-link {
+            display: block;
+            margin-top: 8px;
+            font-size: 0.8rem;
+            color: var(--primary-accent);
+            text-decoration: none;
+            opacity: 0.8;
+        }
+
+        .source-link:hover {
+            opacity: 1;
+        }
+
+        .input-area {
+            padding: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            gap: 10px;
+        }
+
+        input {
+            flex: 1;
+            background: rgba(15, 23, 42, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            padding: 12px 15px;
+            color: white;
+            outline: none;
+        }
+
+        input:focus {
+            border-color: var(--primary-accent);
+        }
+
+        button {
+            background: var(--primary-accent);
+            border: none;
+            border-radius: 10px;
+            padding: 0 20px;
+            color: #0f172a;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        button:hover {
+            transform: scale(1.05);
+        }
+
+        /* Typing Indicator */
+        .typing {
+            font-style: italic;
+            color: var(--text-dim);
+            font-size: 0.8rem;
+            margin-bottom: 8px;
+        }
+    </style>
+</head>
+<body>
+    <div class="chat-container">
+        <div class="header">
+            <h1>📊 SBI Fund FAQ Assistant</h1>
+            <p style="font-size: 0.75rem; color: var(--text-dim); margin-top: 5px;">Phase 4: Full-Stack Chat Interface</p>
+            <p id="last-updated" style="font-size: 0.7rem; color: var(--primary-accent); margin-top: 3px; opacity: 0.8;">Data Status: Checking...</p>
+        </div>
+        <div class="messages" id="chat-box">
+            <div class="message bot">
+                Hello! I can provide factual information about SBI Mutual Fund schemes. How can I help you today?
+            </div>
+        </div>
+        <div class="input-area">
+            <input type="text" id="user-input" placeholder="Ask about expense ratio, exit load..." onkeypress="handleKey(event)">
+            <button onclick="sendMessage()">Send</button>
+        </div>
+    </div>
+
+    <script>
+        const chatBox = document.getElementById('chat-box');
+        const userInput = document.getElementById('user-input');
+
+        function appendMessage(role, text, source = null) {
+            const div = document.createElement('div');
+            div.className = `message ${role}`;
+            div.innerText = text;
+            
+            if (source) {
+                const link = document.createElement('a');
+                link.href = source;
+                link.target = "_blank";
+                link.className = "source-link";
+                link.innerText = "View Source: INDmoney";
+                div.appendChild(link);
+            }
+            
+            chatBox.appendChild(div);
+            chatBox.scrollTop = chatBox.scrollHeight;
+        }
+
+        async function sendMessage() {
+            const text = userInput.value.trim();
+            if (!text) return;
+
+            appendMessage('user', text);
+            userInput.value = '';
+
+            // Loading indicator
+            const loading = document.createElement('div');
+            loading.className = 'typing';
+            loading.innerText = 'Assistant is thinking...';
+            chatBox.appendChild(loading);
+
+            try {
+                const response = await fetch('http://localhost:8000/chat', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ query: text })
+                });
+                
+                const data = await response.json();
+                chatBox.removeChild(loading);
+                appendMessage('bot', data.answer, data.source);
+            } catch (err) {
+                chatBox.removeChild(loading);
+                appendMessage('bot', 'System Error: Make sure the API is running.');
+            }
+        }
+
+        function handleKey(e) {
+            if (e.key === 'Enter') sendMessage();
+        }
+
+        async function fetchLastUpdated() {
+            try {
+                const response = await fetch('http://localhost:8000/last_updated');
+                const data = await response.json();
+                document.getElementById('last-updated').innerText = `Data Last Updated: ${data.last_updated}`;
+            } catch (err) {
+                document.getElementById('last-updated').innerText = `Data Last Updated: Unavailable (API offline)`;
+            }
+        }
+
+        // Fetch the last updated date when the page loads
+        window.onload = fetchLastUpdated;
+    </script>
+</body>
+</html>
