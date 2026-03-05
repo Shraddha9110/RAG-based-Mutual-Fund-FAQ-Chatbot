@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mutual Fund FAQ Chat Bot</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+
+<body>
+    <div class="app-container">
+        <!-- Top Navigation -->
+        <header class="top-nav">
+            <div class="logo-section">
+                <div class="bot-icon">
+                    <i class="fas fa-comment-dots"></i>
+                </div>
+                <h1>Chat Bot</h1>
+            </div>
+            <div class="nav-icons text-center">
+                <i class="fas fa-bars" title="Menu"></i>
+                <i class="fas fa-comment" title="Chat"></i>
+            </div>
+            <div class="user-controls">
+                <span style="color: var(--text-muted); font-size: 14px;">Mutual Fund FAQ Assistant</span>
+            </div>
+        </header>
+
+        <div class="main-layout">
+            <!-- Main Chat Area -->
+            <main class="chat-window">
+                <header class="chat-header">
+                    <div class="chat-user-info">
+                        <img src="https://ui-avatars.com/api/?name=MF+Bot&background=FFB300&color=fff" alt="MF Bot">
+                        <div class="user-status">
+                            <h3>MF FAQ Assistant</h3>
+                            <p>Online | Powered by RAG</p>
+                        </div>
+                    </div>
+                    <div class="chat-actions">
+                        <i class="fas fa-ellipsis-h" title="More options"></i>
+                    </div>
+                </header>
+
+                <div class="message-container" id="chat-messages">
+                    <!-- Bot Welcome Message -->
+                    <div class="message bot">
+                        <img src="https://ui-avatars.com/api/?name=MF+Bot&background=FFB300&color=fff" alt="MF Bot">
+                        <div class="message-bubble">
+                            Welcome to the Mutual Fund FAQ Assistant! How can I help you today?
+                            <span class="msg-time">09:25</span>
+                        </div>
+                    </div>
+                </div>
+
+                <footer class="chat-input-area">
+                    <div class="input-wrapper">
+                        <div class="input-tools-left">
+                            <i class="fas fa-smile" title="Emoji"></i>
+                        </div>
+                        <input type="text" id="user-input"
+                            placeholder="Ask about Mutual Funds (e.g., 'What is the NAV of SBI Large Cap?')">
+                        <div class="input-tools-right">
+                            <button id="send-btn" class="send-button" title="Send">
+                                <i class="fas fa-paper-plane"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="data-status-bar">
+                        <span id="last-updated-text">
+                            <i class="fas fa-sync-alt"></i> Data last updated: <span
+                                id="last-updated-time">Loading...</span>
+                        </span>
+                        <span id="fund-count-text" style="margin-left: 15px;">
+                            <i class="fas fa-database"></i> Funds: <span id="fund-count">-</span>
+                        </span>
+                    </div>
+                </footer>
+            </main>
+
+            <!-- Right Sidebar: Suggestions -->
+            <aside class="sidebar-right">
+                <section class="suggestions-panel">
+                    <h3>Suggested Questions</h3>
+                    <div class="sugg-list" id="suggestion-container">
+                        <!-- Dynamically populated by JavaScript -->
+                        <div style="font-size: 13px; color: var(--text-muted); padding: 10px;">Loading suggestions...
+                        </div>
+                    </div>
+                </section>
+
+
+            </aside>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+
+</html>
