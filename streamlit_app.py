@@ -1,5 +1,5 @@
 import streamlit as st
-from chatbot import MFFAQChatbot
+from phase3.chatbot_logic import MFFAQChatbot
 import time
 
 # Page Configuration
