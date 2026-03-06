@@ -44,11 +44,11 @@ class LastUpdatedResponse(BaseModel):
     data_path_exists: bool = False
     total_funds: int = 0
 
-@app.get("/health")
+@app.get("/api/health")
 def health_check():
     return {"status": "healthy", "model": "Llama-3.3-70b-versatile-RAG"}
 
-@app.get("/last-updated", response_model=LastUpdatedResponse)
+@app.get("/api/last-updated", response_model=LastUpdatedResponse)
 def get_last_updated():
     """
     Get the last updated timestamp for fund data.
@@ -80,7 +80,7 @@ def get_last_updated():
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 
-@app.post("/trigger-update")
+@app.post("/api/trigger-update")
 def trigger_update():
     """
     Manually trigger a full data update cycle.
@@ -97,7 +97,7 @@ def trigger_update():
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 
-@app.post("/chat", response_model=QueryResponse)
+@app.post("/api/chat", response_model=QueryResponse)
 async def chat_endpoint(request: QueryRequest):
     try:
         # Use the real generate_response method
@@ -106,7 +106,7 @@ async def chat_endpoint(request: QueryRequest):
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 
-@app.get("/suggestions")
+@app.get("/api/suggestions")
 def get_suggestions():
     """Reads funds.json and generates varying random suggestion questions."""
     data_path = os.path.join(PROJECT_ROOT, 'data', 'funds.json')
